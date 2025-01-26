@@ -22,7 +22,7 @@ Before you begin, please ensure that you have the following installed on your ma
 1. Clone this repository on your local machine:
 
    ```
-   git clone https://github.com/Giovannikev/todoList_task_1.git
+   git clone https://github.com/Giovannikev/CodeAlpha_Todo_List
    ```
 
 2. Install dependencies:
