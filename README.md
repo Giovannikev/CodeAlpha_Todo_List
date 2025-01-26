@@ -25,13 +25,7 @@ Before you begin, please ensure that you have the following installed on your ma
    git clone https://github.com/Giovannikev/todoList_task_1.git
    ```
 
-2. Go to the project directory:
-
-   ```
-   cd todo-list-app
-   ```
-
-3. Install dependencies:
+2. Install dependencies:
 
    ```
    npm install
@@ -47,11 +41,6 @@ Before you begin, please ensure that you have the following installed on your ma
    npm run dev
    ```
 
-2. Open your browser and go to :
-
-   ```
-   http://localhost:3000
-   ```
 
 ## Technologies used
 
