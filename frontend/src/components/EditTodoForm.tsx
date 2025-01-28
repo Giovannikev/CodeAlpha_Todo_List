@@ -6,7 +6,7 @@ interface Props {
   addTask: (task: Todo) => void;
 }
 
-const TaskForm: React.FC<Props> = () => {
+const EditTodoForm: React.FC<Props> = () => {
   const [description, setDescription] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,4 +42,4 @@ const TaskForm: React.FC<Props> = () => {
   );
 };
 
-export default TaskForm;
+export default EditTodoForm;

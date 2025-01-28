@@ -14,6 +14,7 @@ const TodoList= () => {
         method: 'DELETE',
       })
       setTodos(todos.filter((todo) => todo.todo_id !== todo_id))
+      console.log('Todo deleted : ', res)
     } catch (error) {
       console.log('Error deleting todo:', error)
     }
