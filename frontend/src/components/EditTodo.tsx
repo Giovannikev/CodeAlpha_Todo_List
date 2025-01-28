@@ -35,7 +35,7 @@ const EditTodo = ({todo}: {todo: Todo}) => {
       return(
             <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="secondary">Edit Profile</Button>
+                    <Button variant="secondary">Edit</Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>

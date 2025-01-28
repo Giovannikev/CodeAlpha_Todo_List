@@ -6,8 +6,7 @@ import { Textarea } from "./ui/textarea";
 function InputTodo() {
   const [description, setDescription] = useState("");
 
-  const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Empêche le rechargement de la page
+  const onSubmitForm = async () => {
     try {
       const body = { description };
       const response = await fetch("http://localhost:3000/todos", {
@@ -16,14 +15,14 @@ function InputTodo() {
         body: JSON.stringify(body),
       });
       console.log("Response:", response);
-      window.location.href = '/'
+      window.location.href = '/';
     } catch (error) {
       console.error("Erreur lors de la soumission :", error);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.target.value); 
+    setDescription(e.target.value);
   };
 
   return (
@@ -34,9 +33,11 @@ function InputTodo() {
           <Textarea
             placeholder="Add todo"
             value={description}
-            onChange={handleInputChange} // Utilise une fonction séparée
+            onChange={handleInputChange}
           />
-          <Button type="submit">Add Task</Button>
+          <Button type="submit" disabled={description.trim() === ""}>
+            Add Task
+          </Button>
         </div>
       </form>
       <ListTodos />

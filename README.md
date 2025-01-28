@@ -6,9 +6,9 @@ A simple task management application to organize your daily life.
 
 ## Features
 
-- Add a task: Adds a new task to the list.
-- Edit a task: Allows you to modify the content of an existing task.
-- Delete a task: deletes a task from the list.
+- **Add a Task**: Add a new task to the list.
+- **Edit a Task**: Modify the content of an existing task.
+- **Delete a Task**: Remove a task from the list.
 
 ## Prerequisites
 
@@ -19,34 +19,55 @@ Before you begin, please ensure that you have the following installed on your ma
 
 ## Installation
 
-1. Clone this repository on your local machine:
+### 1. Clone this repository on your local machine:
 
-   ```
-   git clone https://github.com/Giovannikev/CodeAlpha_Todo_List
-   ```
+```
+git clone https://github.com/Giovannikev/CodeAlpha_Todo_List
+```
 
-2. Install dependencies:
+### 2. Open a terminal
 
-   ```
-   npm install
-   ```
+- press windows+R , write `cmd` and press Enter
 
-## Usage
+### 3. Navigate to the frontend folder and install dependencies:
 
-1. Launch the application in development mode:
+- write those commande in the terminal
 
-   With npm :
+```
+cd frontend
+npm install
+```
 
-   ```
-   npm run dev
-   ```
+### 4. Open a new terminal and navigate to the backend folder and install dependencies:
 
+- write those commande in the terminal
 
-## Technologies used
+```
+cd backend
+npm install
+```
 
-- Frontend: React, TypeScript, Tailwind CSS
-- Backend: expressjs
+### 5. Launch the application
+
+- open a terminal and write
+
+```
+cd frontend
+npm run dev
+```
+
+- open a new terminal
+
+```
+cd backend
+nodemon index.js
+```
+
+## Technologies Used
+
+- Frontend: React, TypeScript, Tailwind CSS, Vite
+- Backend: Express.js
 
 ## Author
 
-Created by Giovanni Kevin Randrianarijaona.
+Created by Giovanni Kevin Randrianarijaona
