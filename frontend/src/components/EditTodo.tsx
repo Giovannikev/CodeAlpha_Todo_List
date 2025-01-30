@@ -13,24 +13,27 @@ import { useState } from "react"
     
 
 const EditTodo = ({todo}: {todo: Todo}) => {
-      console.log(todo)
       const [description, setDescription] = useState(todo.description)
-      console.log(description)
       
 
       const saveTodo = async (id: number): Promise<void> => {
             try {
-                  const body = { description }
-                  const res = await fetch(`http://localhost:3000/todos/${id}`, {
-                        method: 'PUT',
-                        headers: { "Content-Type": "application/json"},
-                        body: JSON.stringify(body)
-                  })
-                  window.location.href = '/'
+              const body = { description };
+              const res = await fetch(`http://localhost:3000/todos/${id}`, {
+                method: 'PUT',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+              });
+              if (res.ok) {
+                console.log("Todo updated successfully");
+                window.location.href = '/'; // Redirige après la réussite de la requête
+              } else {
+                console.error("Failed to update todo");
+              }
             } catch (error: unknown) {
-                  console.log(error)
+              console.error("Error:", error);
             }
-      }
+          };
       
       return(
             <Dialog>

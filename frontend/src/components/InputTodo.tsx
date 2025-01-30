@@ -6,7 +6,8 @@ import { Textarea } from "./ui/textarea";
 function InputTodo() {
   const [description, setDescription] = useState("");
 
-  const onSubmitForm = async () => {
+  const onSubmitForm = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
       const body = { description };
       const response = await fetch("http://localhost:3000/todos", {
@@ -14,8 +15,12 @@ function InputTodo() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      console.log("Response:", response);
-      window.location.href = '/';
+      if (response.ok) {
+        console.log("Todo added successfully");
+        window.location.href = '/';
+      } else {
+        console.error("Failed to add todo");
+      }
     } catch (error) {
       console.error("Erreur lors de la soumission :", error);
     }

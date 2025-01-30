@@ -18,15 +18,20 @@ const ListTodos = () => {
       
       async function deleteTodo(todo_id: string): Promise<void> {
             try {
-                  const res = await fetch(`http://localhost:3000/todos/${todo_id}`, {
-                        method: "DELETE",
-                  });
-                  setTodos(todos.filter(todo => todo.todo_id !== todo_id))
-                  window.location.href = '/'
+              const res = await fetch(`http://localhost:3000/todos/${todo_id}`, {
+                method: "DELETE",
+              });
+              if (res.ok) {
+                setTodos(todos.filter(todo => todo.todo_id !== todo_id)); // Met à jour l'état local
+                console.log("Todo deleted successfully");
+                window.location.href = '/'
+              } else {
+                console.error("Failed to delete todo");
+              }
             } catch (error: unknown) {
-                  console.error(error)
+              console.error("Error:", error);
             }
-      }
+          }
       
       async function getTodos() {
             const res = await fetch("http://localhost:3000/todos")
@@ -38,7 +43,6 @@ const ListTodos = () => {
       useEffect(() => {
             getTodos()
       }, [])
-      console.log(todos)
 
     return(
       <>
