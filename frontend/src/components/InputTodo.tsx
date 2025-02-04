@@ -5,6 +5,13 @@ import { Textarea } from "./ui/textarea";
 
 function InputTodo() {
   const [description, setDescription] = useState("");
+  
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      onSubmitForm(e as unknown as React.FormEvent); 
+    }
+  };
+  
 
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,7 +24,7 @@ function InputTodo() {
       });
       if (response.ok) {
         console.log("Todo added successfully");
-        window.location.href = '/';
+        setDescription("")
       } else {
         console.error("Failed to add todo");
       }
@@ -32,13 +39,15 @@ function InputTodo() {
 
   return (
     <>
-      <h1 className="text-center my-5 text-4xl font-light">Todo List</h1>
+      <h1 className="text-center my-5 text-4xl font-semibold">Todo List</h1>
       <form className="gap-4" onSubmit={onSubmitForm}>
-        <div className="flex gap-4 mb-10">
+        <div className="grid w-full gap-2 mb-10">
           <Textarea
             placeholder="Add todo"
             value={description}
             onChange={handleInputChange}
+            onKeyPress={handleKeyPress}
+            className="border border-slate-100"
           />
           <Button type="submit" disabled={description.trim() === ""}>
             Add Task

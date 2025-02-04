@@ -66,7 +66,7 @@ nodemon index.js
 ## Technologies Used
 
 - Frontend: React, TypeScript, Tailwind CSS, Vite
-- Backend: Express.js
+- Backend: Express.js and Sqlite3
 
 ## Author
 

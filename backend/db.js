@@ -1,13 +1,23 @@
-require('dotenv').config();
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
-const Pool = require("pg").Pool;
+const dbPath = path.resolve(__dirname, 'database.db');
+const db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+        console.error("Error while connecting to sqlite", err.message);
+    } else {
+        console.log("Connected to SQLite");
+    }
+});
 
-const pool = new Pool({
-      user: 'postgres',
-      password: '191204',
-      host: 'localhost',
-      database: 'pernstack',
-      port: 5432
-})
+// Création de la table si elle n'existe pas déjà
+db.serialize(() => {
+    db.run(`
+        CREATE TABLE IF NOT EXISTS todo (
+            todo_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            description TEXT NOT NULL
+        )
+    `);
+});
 
-module.exports = pool;
+module.exports = db;
