@@ -3,16 +3,12 @@ import EditTodo from "./EditTodo";
 import Button from "./ui/button";
 import { Todo } from "../types/Task";
 import {
-  Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
 } from "../components/ui/table";
-import { ScrollArea } from "./ui/scrollArea";
 import { Trash2 } from 'lucide-react'
+import './table.css'
 
 const ListTodos = ({ refresh }: { refresh: boolean }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -51,17 +47,16 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
   }, [refresh]); 
 
   return (
-    <ScrollArea className="h-[400px] rounded-md border p-4 overflow-auto">
-      <Table className="relative w-full">
-        <TableCaption>A list of your Task</TableCaption>
-        <TableHeader>
-          <TableRow className="font-bold">
-            <TableHead className="w-[100px]">Description</TableHead>
-            <TableHead className="text-right">Priority</TableHead>
-            <TableHead className="text-right">Edit</TableHead>
-            <TableHead className="text-right">Delete</TableHead>
-          </TableRow>
-        </TableHeader>
+    <div className="scroll-container h-[400px] rounded-md border px-4 overflow-auto">
+      <table className="relative table-auto border-b min-w-full h-auto">
+        <thead className="sticky top-0 right-0 z-20">
+          <tr className="bg-gray-100 font-semibold text-gray-600 h-15 border-b rounded-4xl">
+            <th className="w-[100px]">Description</th>
+            <th className="text-right">Priority</th>
+            <th className="text-right">Edit</th>
+            <th className="text-right">Delete</th>
+          </tr>
+        </thead>
         <TableBody>
           {todos.map((todo) => (
             <TableRow key={todo.todo_id}>
@@ -79,8 +74,8 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
-    </ScrollArea>
+      </table>
+    </div>
   );
 };
 
