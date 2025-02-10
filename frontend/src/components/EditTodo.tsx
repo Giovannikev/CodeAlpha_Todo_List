@@ -8,12 +8,13 @@ import {
   DialogDescription,
 } from "../components/ui/dialog";
 import Button from "./ui/button";
-import { Textarea } from '../components/ui/textarea'
+import { Textarea } from "../components/ui/textarea";
 import { Todo } from "../types/Task";
 import { useState } from "react";
 
-const EditTodo = ({ todo }: { todo: Todo }) => {
+const EditTodo = ({ todo, onUpdate }: { todo: Todo; onUpdate: () => void }) => {
   const [description, setDescription] = useState(todo.description);
+  const [open, setOpen] = useState(false); // 🔥 État pour ouvrir/fermer le Dialog
 
   const saveTodo = async (id: number): Promise<void> => {
     try {
@@ -23,9 +24,11 @@ const EditTodo = ({ todo }: { todo: Todo }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+
       if (res.ok) {
         console.log("Todo updated successfully");
-        setDescription(todo.description)
+        onUpdate();
+        setOpen(false); 
       } else {
         console.error("Failed to update todo");
       }
@@ -35,9 +38,9 @@ const EditTodo = ({ todo }: { todo: Todo }) => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}> 
       <DialogTrigger asChild>
-        <Button variant="secondary">Edit</Button>
+        <Button variant="secondary" onClick={() => setOpen(true)}>Edit</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -58,9 +61,7 @@ const EditTodo = ({ todo }: { todo: Todo }) => {
             Save changes
           </Button>
         </div>
-        <DialogFooter>
-          
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );

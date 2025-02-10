@@ -13,8 +13,20 @@ import {
 } from "../components/ui/table";
 import { ScrollArea } from "./ui/scrollArea";
 
-const ListTodos = () => {
+const ListTodos = ({ refresh }: { refresh: boolean }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
+
+  async function getTodos() {
+    try {
+      const res = await fetch("http://localhost:3000/todos");
+      if (!res.ok) throw new Error("Failed to fetch todos");
+
+      const todoArray = await res.json();
+      setTodos(todoArray); 
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+    }
+  }
 
   async function deleteTodo(todo_id: string): Promise<void> {
     try {
@@ -33,21 +45,9 @@ const ListTodos = () => {
     }
   }
 
-  async function getTodos() {
-    try {
-      const res = await fetch("http://localhost:3000/todos");
-      if (!res.ok) throw new Error("Failed to fetch todos");
-
-      const todoArray = await res.json();
-      setTodos(todoArray);
-    } catch (error) {
-      console.error("Error fetching todos:", error);
-    }
-  }
-
   useEffect(() => {
     getTodos();
-  }, []);
+  }, [refresh]); 
 
   return (
     <ScrollArea className="h-[400px] rounded-md border p-4 overflow-auto">
@@ -65,7 +65,7 @@ const ListTodos = () => {
             <TableRow key={todo.todo_id}>
               <TableCell className="text-left">{todo.description}</TableCell>
               <TableCell className="text-right">
-                <EditTodo todo={todo} />
+                <EditTodo todo={todo} onUpdate={getTodos} /> 
               </TableCell>
               <TableCell className="text-right">
                 <Button variant="danger" onClick={() => deleteTodo(todo.todo_id)}>

@@ -5,13 +5,13 @@ import { Textarea } from "./ui/textarea";
 
 function InputTodo() {
   const [description, setDescription] = useState("");
-  
+  const [refresh, setRefresh] = useState(false); 
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      onSubmitForm(e as unknown as React.FormEvent); 
+      onSubmitForm(e as unknown as React.FormEvent);
     }
   };
-  
 
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,19 +22,17 @@ function InputTodo() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+
       if (response.ok) {
         console.log("Todo added successfully");
-        setDescription("")
+        setDescription(""); 
+        setRefresh((prev) => !prev); 
       } else {
         console.error("Failed to add todo");
       }
     } catch (error) {
       console.error("Erreur lors de la soumission :", error);
     }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.target.value);
   };
 
   return (
@@ -45,7 +43,7 @@ function InputTodo() {
           <Textarea
             placeholder="Add todo"
             value={description}
-            onChange={handleInputChange}
+            onChange={(e) => setDescription(e.target.value)}
             onKeyPress={handleKeyPress}
             className="border border-slate-100"
           />
@@ -54,7 +52,7 @@ function InputTodo() {
           </Button>
         </div>
       </form>
-      <ListTodos />
+      <ListTodos refresh={refresh} /> 
     </>
   );
 }
