@@ -46,6 +46,19 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
     getTodos();
   }, [refresh]); 
 
+  const getRowClass = (priority: string) => {
+    switch (priority.toLowerCase()) {
+      case "high":
+        return "bg-red-200";
+      case "medium":
+        return "bg-yellow-200";
+      case "low":
+        return "bg-green-200";
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="scroll-container h-[400px] rounded-md border px-4 overflow-auto">
       <table className="relative table-auto border-b min-w-full h-auto">
@@ -59,7 +72,7 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
         </thead>
         <TableBody>
           {todos.map((todo) => (
-            <TableRow key={todo.todo_id}>
+            <TableRow key={todo.todo_id} className={getRowClass(todo.priority)}>
               <TableCell className="text-left">{todo.description}</TableCell>
               <TableCell className="text-right">{todo.priority}</TableCell>
               <TableCell className="text-right">
