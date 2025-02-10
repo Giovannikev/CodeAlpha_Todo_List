@@ -15,7 +15,8 @@ db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS todo (
             todo_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            description TEXT NOT NULL
+            description TEXT NOT NULL,
+            priority TEXT DEFAULT 'medium'
         )
     `);
 });

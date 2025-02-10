@@ -36,13 +36,19 @@ app.get("/todos/:id", (req, res) => {
 
 // create a todo
 app.post("/todos", (req, res) => {
-    const { description } = req.body;
-    db.run("INSERT INTO todo (description) VALUES (?)", [description], function (err) {
+    const { description, priority = 'medium' } = req.body; // default value = 'medium'
+    const validPriorities = ["low", "medium" , "high"]
+    
+    if (!validPriorities.includes(priority)) {
+        return res.status(400).json({ error: "Invalid priority value. Must be 'low', 'medium', or 'high' "})
+    }
+    
+    db.run("INSERT INTO todo (description, priority) VALUES (?, ?)", [description, priority], function (err) {
         if (err) {
             console.error(err.message);
             res.status(500).send("Server error");
         } else {
-            res.json({ id: this.lastID, description });
+            res.json({ id: this.lastID, description, priority });
         }
     });
 });
@@ -50,8 +56,14 @@ app.post("/todos", (req, res) => {
 // update todo
 app.put("/todos/:id", (req, res) => {
     const { id } = req.params;
-    const { description } = req.body;
-    db.run("UPDATE todo SET description = ? WHERE todo_id = ?", [description, id], function (err) {
+    const { description, priority } = req.body;
+    const validPriorities = ["low", "medium" , "high"]
+    
+    if (!validPriorities.includes(priority)) {
+        return res.status(400).json({ error: "Invalid priority value. Must be 'low', 'medium', or 'high' "})
+    }
+    
+    db.run("UPDATE todo SET description = ?, priority = ? WHERE todo_id = ?", [description, priority, id], function (err) {
         if (err) {
             console.error(err.message);
             res.status(500).send("Server error");

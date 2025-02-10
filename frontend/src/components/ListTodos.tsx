@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "../components/ui/table";
 import { ScrollArea } from "./ui/scrollArea";
+import { Trash2 } from 'lucide-react'
 
 const ListTodos = ({ refresh }: { refresh: boolean }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -53,9 +54,10 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
     <ScrollArea className="h-[400px] rounded-md border p-4 overflow-auto">
       <Table className="relative w-full">
         <TableCaption>A list of your Task</TableCaption>
-        <TableHeader className="sticky top-0 shadow-md">
-          <TableRow className="text-white font-bold">
+        <TableHeader>
+          <TableRow className="font-bold">
             <TableHead className="w-[100px]">Description</TableHead>
+            <TableHead className="text-right">Priority</TableHead>
             <TableHead className="text-right">Edit</TableHead>
             <TableHead className="text-right">Delete</TableHead>
           </TableRow>
@@ -64,11 +66,13 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
           {todos.map((todo) => (
             <TableRow key={todo.todo_id}>
               <TableCell className="text-left">{todo.description}</TableCell>
+              <TableCell className="text-right">{todo.priority}</TableCell>
               <TableCell className="text-right">
                 <EditTodo todo={todo} onUpdate={getTodos} /> 
               </TableCell>
               <TableCell className="text-right">
                 <Button variant="danger" onClick={() => deleteTodo(todo.todo_id)}>
+                  <Trash2 className='h-4 w-4'/>
                   Delete
                 </Button>
               </TableCell>

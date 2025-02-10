@@ -1,22 +1,24 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import Button from "./ui/button";
 import ListTodos from "./ListTodos";
 import { Textarea } from "./ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 function InputTodo() {
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("medium");
   const [refresh, setRefresh] = useState(false); 
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      onSubmitForm(e as unknown as React.FormEvent);
-    }
-  };
 
   const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const body = { description };
+      const body = { description, priority };
       const response = await fetch("http://localhost:3000/todos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,34 +28,51 @@ function InputTodo() {
       if (response.ok) {
         console.log("Todo added successfully");
         setDescription(""); 
+        setPriority("medium");
         setRefresh((prev) => !prev); 
       } else {
         console.error("Failed to add todo");
       }
     } catch (error) {
-      console.error("Erreur lors de la soumission :", error);
+      console.error("Error  while submitting the form :", error);
     }
   };
 
   return (
-    <>
+    <div>
       <h1 className="text-center my-5 text-4xl font-semibold">Todo List</h1>
-      <form className="gap-4" onSubmit={onSubmitForm}>
-        <div className="grid w-full gap-2 mb-10">
-          <Textarea
-            placeholder="Add todo"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className="border border-slate-100"
-          />
-          <Button type="submit" disabled={description.trim() === ""}>
-            Add Task
-          </Button>
-        </div>
-      </form>
-      <ListTodos refresh={refresh} /> 
-    </>
+      <div className="flex justify-center">
+        <form className="gap-4 justify-between items-center w-full mb-10" onSubmit={onSubmitForm}>
+          <div className="flex gap-2">
+            <Textarea
+              placeholder="Add todo"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="border border-slate-300"
+            />
+            
+            <Select value={priority} onValueChange={(value) => setPriority(value)}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Priority" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="high">High</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="low">Low</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Button type="submit" disabled={description.trim() === ""}>
+              Add Task
+            </Button>
+          </div>
+        </form>
+      </div>
+      
+      <div className="">
+        <ListTodos refresh={refresh} /> 
+      </div>
+    </div>
   );
 }
 
