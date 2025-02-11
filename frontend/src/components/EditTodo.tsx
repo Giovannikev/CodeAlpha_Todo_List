@@ -54,13 +54,13 @@ const EditTodo = ({ todo, onUpdate }: { todo: Todo; onUpdate: () => void }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit todo</DialogTitle>
+          <DialogTitle className="text-gray-900">Edit todo</DialogTitle>
           <DialogDescription>
             Modify the description of your todo and save the changes.
           </DialogDescription>
         </DialogHeader>
         <p className="text-left">Description :</p>
-        <div className="w-full gap-4">
+        <div className="w-full gap-4 text-gray-900">
           <Textarea
             id="todo-description"
             value={description}

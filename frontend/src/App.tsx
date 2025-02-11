@@ -4,7 +4,7 @@ import InputTodo from './components/InputTodo';
 function App() {
   return (
     <>
-      <div className="max-w-5xl mx-auto p-4 border-2 rounded shadow text-gray-900">
+      <div className="w-full mx-auto p-4 text-gray-900">
         <InputTodo />
     </div>
     </>
