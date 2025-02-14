@@ -37,7 +37,7 @@ function InputTodo() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
+    <div className="max-w-6xl mx-auto space-y-8">
       <h1 className="text-4xl font-bold text-center  mb-8">Task list</h1>
       <form className="space-y-4" onSubmit={onSubmitForm}>
         <div className="flex gap-4">

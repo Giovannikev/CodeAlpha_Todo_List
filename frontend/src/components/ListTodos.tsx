@@ -10,6 +10,7 @@ import { ScrollArea } from "./ui/scrollArea"
 
 const ListTodos = ({ refresh }: { refresh: boolean }) => {
   const [todos, setTodos] = useState<Todo[]>([])
+  const [scrollHeight, setScrollHeight] = useState("auto")
 
   const getTodos = useCallback(async () => {
     try {
@@ -44,6 +45,11 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
     getTodos()
   }, [refresh, getTodos])
 
+  useEffect(() => {
+    const newHeight = Math.min(500, todos.length * 150) + "px"
+    setScrollHeight(newHeight)
+  }, [todos])
+
   const getPriorityColor = (priority: string) => {
     switch (priority.toLowerCase()) {
       case "high":
@@ -58,37 +64,37 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
   }
 
   return (
-  <ScrollArea className="h-[570px] p-4 border border-gray-400 rounded-2xl">
-    <div className="grid grid-cols-2 gap-4">
-      <AnimatePresence>
-        {todos.map((todo) => (
-          <motion.div
-            key={todo.todo_id}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="w-full bg-white rounded-lg shadow-md p-4 space-x-4 flex items-center justify-between"
-          >
-            <div className="flex-grow">
-              <p className="text-lg text-left font-medium text-gray-800 max-xl:text-md">{todo.description}</p>
-              <span
-                className={`inline-block px-2 py-1 rounded-full text-xs font-semibold mt-2 ${getPriorityColor(todo.priority)}`}
-              >
-                {todo.priority}
-              </span>
-            </div>
-            <div className="flex space-x-2">
-              <EditTodo todo={todo} onUpdate={getTodos} />
-              <Button variant="danger" onClick={() => deleteTodo(todo.todo_id)}>
-                <Trash2 className="h-4 w-4" /> Delete
-              </Button>
-            </div>
-          </motion.div>
-        ))}
-      </AnimatePresence>
-    </div>
-  </ScrollArea>
-)}
+    <ScrollArea className="p-4 border border-gray-400 rounded-2xl" style={{ height: scrollHeight }}>
+      <div className="grid grid-cols-2 gap-4">
+        <AnimatePresence>
+          {todos.map((todo) => (
+            <motion.div
+              key={todo.todo_id}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="w-full bg-white rounded-lg shadow-md p-4 space-x-4 flex items-center justify-between"
+            >
+              <div className="flex-grow">
+                <p className="text-lg text-left font-medium text-gray-800 max-xl:text-md">{todo.description}</p>
+                <span
+                  className={`inline-block px-2 py-1 rounded-full text-xs font-semibold mt-2 ${getPriorityColor(todo.priority)}`}
+                >
+                  {todo.priority}
+                </span>
+              </div>
+              <div className="flex space-x-2">
+                <EditTodo todo={todo} onUpdate={getTodos} />
+                <Button variant="danger" onClick={() => deleteTodo(todo.todo_id)}>
+                  <Trash2 className="h-4 w-4" /> Delete
+                </Button>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+    </ScrollArea>
+  )
+}
 
 export default ListTodos
-
