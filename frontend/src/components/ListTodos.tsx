@@ -6,6 +6,7 @@ import Button from "@/components/ui/button"
 import type { Todo } from "@/types/Task"
 import { Trash2 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { ScrollArea } from "./ui/scrollArea"
 
 const ListTodos = ({ refresh }: { refresh: boolean }) => {
   const [todos, setTodos] = useState<Todo[]>([])
@@ -57,6 +58,7 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
   }
 
   return (
+  <ScrollArea className="h-[570px] p-4 border border-gray-400 rounded-2xl">
     <div className="grid grid-cols-2 gap-4">
       <AnimatePresence>
         {todos.map((todo) => (
@@ -85,8 +87,8 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
         ))}
       </AnimatePresence>
     </div>
-  )
-}
+  </ScrollArea>
+)}
 
 export default ListTodos
 
