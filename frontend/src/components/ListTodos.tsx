@@ -46,7 +46,7 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
   }, [refresh, getTodos])
 
   useEffect(() => {
-    const newHeight = Math.min(500, todos.length * 150) + "px"
+    const newHeight = Math.min(500, todos.length * 140) + "px"
     setScrollHeight(newHeight)
   }, [todos])
 
@@ -75,8 +75,8 @@ const ListTodos = ({ refresh }: { refresh: boolean }) => {
               exit={{ opacity: 0, y: -10 }}
               className="w-full bg-white rounded-lg shadow-md p-4 space-x-4 flex items-center justify-between"
             >
-              <div className="flex-grow">
-                <p className="text-lg text-left font-medium text-gray-800 max-xl:text-md">{todo.description}</p>
+              <div className="flex-grow text-left">
+                <p className="text-lg font-medium text-gray-800 max-xl:text-md">{todo.description}</p>
                 <span
                   className={`inline-block px-2 py-1 rounded-full text-xs font-semibold mt-2 ${getPriorityColor(todo.priority)}`}
                 >
